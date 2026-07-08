@@ -119,7 +119,7 @@
   .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
   .dot.blue{background:var(--blue);} .dot.green{background:var(--green);}
   .dot.purple{background:var(--purple);} .dot.orange{background:var(--orange);}
-  .dot.grey{background:var(--text3);}
+  .dot.grey{background:var(--text3);} .dot.red{background:var(--red);} .dot.teal{background:#14b8a6;}
 
   .person{
     background:var(--card); border:1px solid var(--border); border-radius:7px;
@@ -234,7 +234,9 @@
       <label>Papel no Projeto</label>
       <select id="psPapel">
         <option value="pmo">PMO</option>
-        <option value="lider">Líder</option>
+        <option value="gestor">Gestor do Projeto</option>
+        <option value="lider">Líder do Projeto</option>
+        <option value="head">Head</option>
         <option value="backoffice">Equipe de Backoffice</option>
         <option value="equipe">Equipe do Projeto</option>
         <option value="terceiros">Terceiros</option>
@@ -312,7 +314,9 @@ function hideLoading(){ document.getElementById("loadingOverlay").style.display=
 
 const PAPEIS = {
   pmo:         { label:"PMO",                    dot:"blue"   },
-  lider:       { label:"Líder",                  dot:"green"  },
+  gestor:      { label:"Gestor do Projeto",      dot:"orange" },
+  lider:       { label:"Líder do Projeto",       dot:"green"  },
+  head:        { label:"Head",                   dot:"teal"   },
   backoffice:  { label:"Equipe de Backoffice",   dot:"purple" },
   equipe:      { label:"Equipe do Projeto",      dot:"blue"   },
   terceiros:   { label:"Terceiros",              dot:"grey"   },
