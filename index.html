@@ -89,34 +89,43 @@
   .field-row .field{flex:1;}
   .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:20px;}
 
-  /* Governance detail */
-  .gov-header{
-    text-align:center; padding:20px; border-radius:var(--radius);
-    background:linear-gradient(135deg, rgba(245,158,11,.12), rgba(245,158,11,.02));
-    border:1px solid rgba(245,158,11,.3); margin-bottom:20px;
-  }
-  .gov-header .label{font-size:11px; color:var(--orange); font-weight:700; letter-spacing:.5px; margin-bottom:6px;}
-  .gov-header .name{font-size:18px; font-weight:700;}
-  .gov-header .meta{font-size:12px; color:var(--text3); margin-top:4px;}
+  /* Governance detail — organogram / branch style */
+  .gov-diagram{display:flex; align-items:stretch; margin-bottom:8px;}
 
-  .gov-sections{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px;}
-  .gov-section{
-    background:var(--card2); border:1px solid var(--border); border-radius:9px; padding:14px;
-    max-height:calc(100vh - 300px); display:flex; flex-direction:column;
+  .gov-rail{
+    writing-mode:vertical-rl; transform:rotate(180deg);
+    background:linear-gradient(180deg, rgba(245,158,11,.18), rgba(245,158,11,.04));
+    border:1px solid rgba(245,158,11,.35); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:18px 12px; min-width:54px; margin-right:24px; flex-shrink:0;
   }
-  .gov-section .sec-head{
-    display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-shrink:0;
+  .gov-rail .rail-label{font-size:10px; font-weight:700; letter-spacing:1.5px; color:var(--orange);}
+  .gov-rail .rail-name{font-size:15px; font-weight:700; color:var(--text);}
+
+  .gov-branch, .gov-branch-right{
+    position:relative; display:flex; flex-direction:column; gap:14px; padding-left:24px;
   }
-  .gov-section .person-list{
-    overflow-y:auto; flex:1; min-height:0; margin-right:-6px; padding-right:6px;
+  .gov-branch{justify-content:center; margin-right:28px; flex-shrink:0;}
+  .gov-branch-right{flex:1; min-width:0;}
+  .gov-branch::before, .gov-branch-right::before{
+    content:''; position:absolute; left:0; top:22px; bottom:22px; width:2px; background:var(--border);
   }
-  .gov-section .person-list::-webkit-scrollbar{width:5px;}
-  .gov-section .person-list::-webkit-scrollbar-thumb{background:var(--border); border-radius:3px;}
-  .gov-section .add-person-btn{flex-shrink:0;}
-  .gov-section .sec-title{
-    font-size:12px; font-weight:700; letter-spacing:.3px; display:flex; align-items:center; gap:7px;
+  .gov-box{
+    position:relative; background:var(--card2); border:1px solid var(--border); border-radius:9px;
+    padding:12px 14px; min-width:190px;
   }
-  .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
+  .gov-box::before{
+    content:''; position:absolute; left:-24px; top:22px; width:24px; height:2px; background:var(--border);
+  }
+  .gov-box .box-title{
+    font-size:12px; font-weight:700; letter-spacing:.3px; display:flex; align-items:center; gap:7px; margin-bottom:8px;
+  }
+  .gov-branch .gov-box .person-list{max-height:150px; overflow-y:auto; margin-right:-6px; padding-right:6px;}
+  .gov-branch-right .gov-box .person-list{max-height:230px; overflow-y:auto; margin-right:-6px; padding-right:6px;}
+  .gov-box .person-list::-webkit-scrollbar{width:5px;}
+  .gov-box .person-list::-webkit-scrollbar-thumb{background:var(--border); border-radius:3px;}
+
+  .dot{width:8px; height:8px; border-radius:50%; display:inline-block; flex-shrink:0;}
   .dot.blue{background:var(--blue);} .dot.green{background:var(--green);}
   .dot.purple{background:var(--purple);} .dot.orange{background:var(--orange);}
   .dot.grey{background:var(--text3);} .dot.red{background:var(--red);} .dot.teal{background:#14b8a6;}
@@ -137,6 +146,13 @@
   }
   .add-person-btn:hover{border-color:var(--blue); color:var(--blue);}
   .sec-empty{font-size:11.5px; color:var(--text3); font-style:italic; padding:6px 0;}
+
+  @media(max-width:900px){
+    .gov-diagram{flex-direction:column; gap:16px;}
+    .gov-rail{writing-mode:horizontal-tb; transform:none; min-width:auto; margin-right:0; margin-bottom:4px; flex-direction:row;}
+    .gov-branch, .gov-branch-right{padding-left:0; margin-right:0;}
+    .gov-branch::before, .gov-branch-right::before, .gov-box::before{display:none;}
+  }
 
   #loadingOverlay{
     position:fixed; inset:0; background:var(--bg); z-index:999;
@@ -212,13 +228,21 @@
 <!-- Modal: Detalhe de Governança -->
 <div class="overlay" id="detailOverlay">
   <div class="modal wide">
-    <h2><span id="detailTitle">Governança</span><span class="close" onclick="closeDetail()">&times;</span></h2>
-    <div class="gov-header">
-      <div class="label">SPONSOR</div>
-      <div class="name" id="detailSponsor">—</div>
-      <div class="meta" id="detailMeta">—</div>
+    <h2>
+      <span style="display:flex; align-items:baseline; gap:10px; min-width:0">
+        <span id="detailTitle" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis">Governança</span>
+        <span id="detailMeta" style="font-size:11px; color:var(--text3); font-weight:400; white-space:nowrap">—</span>
+      </span>
+      <span class="close" onclick="closeDetail()">&times;</span>
+    </h2>
+    <div class="gov-diagram">
+      <div class="gov-rail">
+        <div class="rail-label">SPONSOR</div>
+        <div class="rail-name" id="detailSponsor">—</div>
+      </div>
+      <div class="gov-branch" id="govLeftBranch"></div>
+      <div class="gov-branch-right" id="govRightBranch"></div>
     </div>
-    <div class="gov-sections" id="govSections"></div>
     <div class="modal-actions">
       <button class="btn danger" onclick="askDeleteProject()">Excluir Projeto</button>
       <button class="btn secondary" onclick="openEditProject()">Editar Dados do Projeto</button>
@@ -440,7 +464,7 @@ window.saveProject = function(){
     if(currentProjectId === editingProjectId){
       document.getElementById("detailTitle").textContent = nome;
       document.getElementById("detailSponsor").textContent = sponsor || "—";
-      document.getElementById("detailMeta").textContent = codigo || "—";
+      document.getElementById("detailMeta").textContent = codigo ? `Código: ${codigo}` : "—";
     }
   } else {
     projects.push({
@@ -485,38 +509,41 @@ window.closeDetail = function(){
   currentProjectId = null;
 }
 
-function renderSections(p){
-  const container = document.getElementById("govSections");
-  const pessoas = p.pessoas || [];
-  container.innerHTML = Object.keys(PAPEIS).map(key => {
-    const conf = PAPEIS[key];
-    const lista = pessoas.filter(ps => ps.papel === key);
-    const peopleHtml = lista.length
-      ? lista.map(ps => `
-        <div class="person">
-          <div class="person-actions">
-            <span onclick="event.stopPropagation(); openEditPerson('${ps.id}')" title="Editar">✏️</span>
-            <span onclick="event.stopPropagation(); askDeletePerson('${ps.id}')" title="Excluir">🗑️</span>
-          </div>
-          <div class="pname">${escapeHtml(ps.nome)}</div>
-          <div class="pmeta">
-            ${ps.setor ? `<b>Setor:</b> ${escapeHtml(ps.setor)}<br>` : ""}
-            ${ps.gerente ? `<b>Gerente:</b> ${escapeHtml(ps.gerente)}<br>` : ""}
-            ${ps.head ? `<b>Head:</b> ${escapeHtml(ps.head)}<br>` : ""}
-            ${ps.unidade ? `<b>Unidade:</b> ${escapeHtml(ps.unidade)}` : ""}
-          </div>
-        </div>`).join("")
-      : `<div class="sec-empty">Ninguém cadastrado ainda.</div>`;
+const LEFT_KEYS = ["pmo","gestor","lider","head"];
+const RIGHT_KEYS = ["backoffice","equipe","terceiros"];
 
-    return `
-      <div class="gov-section">
-        <div class="sec-head">
-          <div class="sec-title"><span class="dot ${conf.dot}"></span>${conf.label}</div>
+function buildBox(key, pessoas){
+  const conf = PAPEIS[key];
+  const lista = pessoas.filter(ps => ps.papel === key);
+  const peopleHtml = lista.length
+    ? lista.map(ps => `
+      <div class="person">
+        <div class="person-actions">
+          <span onclick="event.stopPropagation(); openEditPerson('${ps.id}')" title="Editar">✏️</span>
+          <span onclick="event.stopPropagation(); askDeletePerson('${ps.id}')" title="Excluir">🗑️</span>
         </div>
-        <div class="person-list">${peopleHtml}</div>
-        <button class="add-person-btn" onclick="openNewPerson('${key}')">+ Adicionar pessoa</button>
-      </div>`;
-  }).join("");
+        <div class="pname">${escapeHtml(ps.nome)}</div>
+        <div class="pmeta">
+          ${ps.setor ? `<b>Setor:</b> ${escapeHtml(ps.setor)}<br>` : ""}
+          ${ps.gerente ? `<b>Gerente:</b> ${escapeHtml(ps.gerente)}<br>` : ""}
+          ${ps.head ? `<b>Head:</b> ${escapeHtml(ps.head)}<br>` : ""}
+          ${ps.unidade ? `<b>Unidade:</b> ${escapeHtml(ps.unidade)}` : ""}
+        </div>
+      </div>`).join("")
+    : `<div class="sec-empty">Ninguém cadastrado ainda.</div>`;
+
+  return `
+    <div class="gov-box">
+      <div class="box-title"><span class="dot ${conf.dot}"></span>${conf.label}</div>
+      <div class="person-list">${peopleHtml}</div>
+      <button class="add-person-btn" onclick="openNewPerson('${key}')">+ Adicionar pessoa</button>
+    </div>`;
+}
+
+function renderSections(p){
+  const pessoas = p.pessoas || [];
+  document.getElementById("govLeftBranch").innerHTML = LEFT_KEYS.map(k => buildBox(k, pessoas)).join("");
+  document.getElementById("govRightBranch").innerHTML = RIGHT_KEYS.map(k => buildBox(k, pessoas)).join("");
 }
 
 // ─── Pessoa: criar / editar / excluir ────────────────────────────────────────
