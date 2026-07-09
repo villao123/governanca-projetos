@@ -4,138 +4,183 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Governança de Projetos · Grupo DB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root{
-    --bg:#0d1117; --card:#161b22; --card2:#1c2229; --border:#2a3138;
-    --text:#e6edf3; --text2:#9ba7b4; --text3:#6e7681;
-    --blue:#0066ff; --green:#10b981; --red:#ef4444; --orange:#f59e0b; --purple:#8b5cf6;
-    --radius:10px;
+    --bg:#0a1420; --bg2:#0d1a29; --card:#0f1e30; --card2:#152840; --card3:#1a2f4a; --border:#233852;
+    --text:#eef3f8; --text2:#93a6bd; --text3:#5c7089;
+    --c-teal:#2dd4bf; --c-gold:#e0a94b; --c-blue:#7ea6e0; --c-rose:#e08a8a;
+    --c-plum:#ad93de; --c-sage:#7bcf9a; --c-stone:#8a9cb3; --c-amber:#f0b23c; --c-red:#e2685f;
+    --radius:16px; --radius-sm:11px;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 24px -12px rgba(0,0,0,.5);
+    --shadow-lg:0 4px 10px rgba(0,0,0,.3), 0 20px 40px -16px rgba(0,0,0,.55);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
-    background:var(--bg); color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(1100px 500px at 12% -8%, rgba(45,212,191,.08), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(224,169,75,.06), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     min-height:100vh;
   }
+  h1, h2, h3, .box-title, .rail-name{font-family:'Sora',-apple-system,sans-serif;}
   header{
     display:flex; align-items:center; justify-content:space-between;
-    padding:18px 28px; border-bottom:1px solid var(--border);
-    background:var(--card); flex-wrap:wrap; gap:14px;
+    padding:20px 30px; border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg, var(--bg2), var(--bg)); flex-wrap:wrap; gap:14px;
+    position:relative;
+  }
+  header::after{
+    content:''; position:absolute; left:0; right:0; bottom:-1px; height:1px;
+    background:linear-gradient(90deg, var(--c-teal), transparent 45%);
   }
   .brand{display:flex; align-items:center; gap:14px;}
-  .brand img{height:34px; border-radius:4px;}
-  .brand h1{font-size:19px; font-weight:600;}
-  .brand span{font-size:12px; color:var(--text3); display:block;}
+  .brand img{height:36px; border-radius:8px;}
+  .brand .chev{color:var(--c-teal); font-weight:800; margin-right:2px;}
+  .brand h1{font-size:19px; font-weight:700; letter-spacing:.2px;}
+  .brand span{font-size:12px; color:var(--text3); display:block; margin-top:1px;}
   .toolbar{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
   input[type="text"]{
     background:var(--card2); border:1px solid var(--border); color:var(--text);
-    padding:9px 14px; border-radius:8px; font-size:13px; min-width:220px;
+    padding:10px 15px; border-radius:var(--radius-sm); font-size:13px; min-width:220px;
+    font-family:'Inter',sans-serif; transition:border-color .15s;
   }
-  input[type="text"]:focus, select:focus{outline:1.5px solid var(--blue);}
+  input[type="text"]:focus, select:focus{outline:none; border-color:var(--c-teal);}
   .btn{
-    background:var(--blue); color:#fff; border:none; padding:10px 16px;
-    border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;
-    display:inline-flex; align-items:center; gap:6px; transition:opacity .15s;
+    background:var(--c-teal); color:#06251f; border:none; padding:10px 18px;
+    border-radius:var(--radius-sm); font-size:13px; font-weight:700; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px; transition:transform .12s, box-shadow .12s, opacity .15s;
+    box-shadow:0 2px 10px -2px rgba(45,212,191,.45);
   }
-  .btn:hover{opacity:.85;}
-  .btn.secondary{background:var(--card2); border:1px solid var(--border); color:var(--text2);}
-  .btn.danger{background:var(--red);}
-  .btn.ghost{background:transparent; border:1px solid var(--border); color:var(--text2); padding:7px 12px; font-size:12px;}
+  .btn:hover{transform:translateY(-1px); box-shadow:0 4px 16px -2px rgba(45,212,191,.55);}
+  .btn.secondary{background:var(--card2); border:1px solid var(--border); color:var(--text2); box-shadow:none;}
+  .btn.secondary:hover{border-color:var(--c-teal); color:var(--text); transform:none;}
+  .btn.danger{background:var(--c-red); color:#2a0e0c; box-shadow:0 2px 10px -2px rgba(226,104,95,.4);}
+  .btn.ghost{background:transparent; border:1px solid var(--border); color:var(--text2); padding:7px 12px; font-size:12px; box-shadow:none;}
 
-  main{padding:24px 28px; max-width:1400px; margin:0 auto;}
+  main{padding:26px 30px; max-width:1400px; margin:0 auto;}
   .grid{
     display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-    gap:16px; margin-top:18px;
+    gap:18px; margin-top:22px;
   }
   .pcard{
     background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
-    padding:18px; cursor:pointer; transition:border-color .15s, transform .1s;
+    padding:20px; cursor:pointer; transition:border-color .18s, transform .15s, box-shadow .18s;
+    box-shadow:var(--shadow);
   }
-  .pcard:hover{border-color:var(--blue); transform:translateY(-2px);}
-  .pcard .codigo{font-size:11px; color:var(--text3); font-weight:600; letter-spacing:.3px;}
-  .pcard h3{font-size:15px; margin:6px 0 12px; line-height:1.3;}
-  .pcard .sponsor-row{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text2); margin-bottom:8px;}
+  .pcard:hover{border-color:rgba(45,212,191,.45); transform:translateY(-3px); box-shadow:var(--shadow-lg);}
+  .pcard .codigo{font-size:10.5px; color:var(--text3); font-weight:700; letter-spacing:.6px;}
+  .pcard h3{font-size:15.5px; margin:7px 0 13px; line-height:1.35; font-weight:700;}
+  .pcard .sponsor-row{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text2); margin-bottom:10px;}
   .pcard .sponsor-row .tag{
-    background:rgba(245,158,11,.15); color:var(--orange); padding:2px 8px;
-    border-radius:5px; font-size:10px; font-weight:700; letter-spacing:.3px;
+    background:rgba(240,178,60,.14); color:var(--c-amber); padding:3px 9px;
+    border-radius:20px; font-size:9.5px; font-weight:700; letter-spacing:.5px;
   }
   .pcard .count{font-size:12px; color:var(--text3); display:flex; align-items:center; gap:6px;}
   .empty{
-    text-align:center; padding:60px 20px; color:var(--text3);
+    text-align:center; padding:70px 20px; color:var(--text3);
   }
-  .empty h2{color:var(--text2); font-size:16px; margin-bottom:8px; font-weight:600;}
+  .empty h2{color:var(--text2); font-size:16px; margin-bottom:8px; font-weight:700; font-family:'Sora',sans-serif;}
 
   /* Overlay / Modal */
   .overlay{
-    display:none; position:fixed; inset:0; background:rgba(0,0,0,.6);
+    display:none; position:fixed; inset:0; background:rgba(4,8,14,.72); backdrop-filter:blur(2px);
     z-index:100; align-items:flex-start; justify-content:center; overflow-y:auto;
     padding:20px 16px;
   }
   .overlay.open{display:flex;}
+  #projectOverlay.open{z-index:200;}
+  #personOverlay.open{z-index:200;}
+  #confirmOverlay.open{z-index:300;}
   .modal{
     background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
-    width:100%; max-width:480px; padding:20px; margin-top:10px;
+    width:100%; max-width:480px; padding:22px; margin-top:10px; box-shadow:var(--shadow-lg);
   }
-  .modal.wide{max-width:96vw; width:96vw; max-height:92vh; overflow-y:auto;}
-  .modal h2{font-size:16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between;}
-  .modal h2 .close{cursor:pointer; color:var(--text3); font-size:20px; line-height:1;}
+  .modal.wide{
+    max-width:96vw; width:96vw; max-height:90vh;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .modal h2{font-size:16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; font-weight:700; flex-shrink:0;}
+  .modal h2 .close{cursor:pointer; color:var(--text3); font-size:20px; line-height:1; transition:color .12s;}
+  .modal h2 .close:hover{color:var(--text);}
   .field{margin-bottom:14px;}
   .field label{display:block; font-size:12px; color:var(--text2); margin-bottom:6px; font-weight:600;}
   .field input, .field select{
     width:100%; background:var(--card2); border:1px solid var(--border); color:var(--text);
-    padding:10px 12px; border-radius:7px; font-size:13px;
+    padding:10px 13px; border-radius:var(--radius-sm); font-size:13px; font-family:'Inter',sans-serif;
+    transition:border-color .15s;
   }
+  .field input:focus, .field select:focus{outline:none; border-color:var(--c-teal);}
   .field-row{display:flex; gap:12px;}
   .field-row .field{flex:1;}
-  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:20px;}
+  .modal-actions{display:flex; justify-content:space-between; gap:10px; margin-top:16px; flex-shrink:0;}
+  .modal-actions .grp{display:flex; gap:10px;}
 
-  /* Governance detail — organogram / branch style */
-  .gov-diagram{display:flex; align-items:stretch; margin-bottom:4px;}
+  /* Governance detail — organogram / branch style, fills available height, no page scroll on desktop */
+  .gov-diagram{display:flex; align-items:stretch; flex:1; min-height:0;}
 
   .gov-rail{
-    writing-mode:vertical-rl; transform:rotate(180deg);
-    background:linear-gradient(180deg, rgba(245,158,11,.18), rgba(245,158,11,.04));
-    border:1px solid rgba(245,158,11,.35); border-radius:8px;
+    background:linear-gradient(180deg, rgba(240,178,60,.18), rgba(240,178,60,.05));
+    border:1px solid rgba(240,178,60,.32); border-radius:var(--radius-sm);
     display:flex; align-items:center; justify-content:center; gap:8px;
     padding:14px 10px; min-width:46px; margin-right:18px; flex-shrink:0;
   }
-  .gov-rail .rail-label{font-size:9px; font-weight:700; letter-spacing:1.5px; color:var(--orange);}
-  .gov-rail .rail-name{font-size:13px; font-weight:700; color:var(--text);}
+  .gov-rail .rail-label{writing-mode:vertical-rl; transform:rotate(180deg); font-size:9px; font-weight:700; letter-spacing:1.5px; color:var(--c-amber);}
+  .gov-rail .rail-name{writing-mode:vertical-rl; transform:rotate(180deg); font-size:13px; font-weight:700; color:var(--text);}
 
-  .gov-branch, .gov-branch-right{
-    position:relative; display:flex; flex-direction:column; gap:10px; padding-left:18px;
+  .gov-branch{
+    position:relative; display:flex; flex-direction:column; gap:8px; padding-left:18px;
+    justify-content:space-between; margin-right:22px; flex-shrink:0; min-height:0;
   }
-  .gov-branch{justify-content:center; margin-right:22px; flex-shrink:0;}
-  .gov-branch-right{flex:1; min-width:0;}
-  .gov-branch::before, .gov-branch-right::before{
-    content:''; position:absolute; left:0; top:18px; bottom:18px; width:2px; background:var(--border);
+  .gov-branch-right{
+    position:relative; display:flex; flex-direction:row; gap:14px; padding-left:18px;
+    flex:1; min-width:0; min-height:0;
+  }
+  .gov-branch::before{
+    content:''; position:absolute; left:0; top:18px; bottom:18px; width:1.5px; background:var(--border);
+  }
+  .gov-branch-right::before{
+    content:''; position:absolute; left:0; top:18px; right:calc(100% - 18px - 2px); height:1.5px; width:auto;
+    background:transparent; border-top:1.5px solid var(--border);
   }
   .gov-box{
-    position:relative; background:var(--card2); border:1px solid var(--border); border-radius:8px;
-    padding:10px 12px; min-width:170px;
+    position:relative; background:var(--card2); border:1px solid var(--border); border-radius:var(--radius-sm);
+    padding:11px 13px; min-width:170px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; min-height:0;
   }
-  .gov-box::before{
-    content:''; position:absolute; left:-18px; top:18px; width:18px; height:2px; background:var(--border);
+  .gov-branch .gov-box::before{
+    content:''; position:absolute; left:-18px; top:18px; width:18px; height:1.5px; background:var(--border);
+  }
+  .gov-branch-right .gov-box{flex:1; min-width:0;}
+  .gov-branch-right .gov-box::before{
+    content:''; position:absolute; left:14px; top:-16px; width:1.5px; height:16px; background:var(--border);
   }
   .gov-box .box-title{
-    font-size:11px; font-weight:700; letter-spacing:.3px; display:flex; align-items:center; gap:6px; margin-bottom:6px;
+    font-size:11px; font-weight:700; letter-spacing:.3px; display:flex; align-items:center; gap:6px;
+    margin-bottom:6px; flex-shrink:0;
   }
-  .gov-branch .gov-box .person-list{max-height:120px; overflow-y:auto; margin-right:-6px; padding-right:6px;}
-  .gov-branch-right .gov-box .person-list{max-height:190px; overflow-y:auto; margin-right:-6px; padding-right:6px;}
+  .gov-box .person-list{flex:1; min-height:0; overflow-y:auto; margin-right:-6px; padding-right:6px;}
+  .gov-box .add-person-btn{flex-shrink:0;}
   .gov-box .person-list::-webkit-scrollbar{width:5px;}
   .gov-box .person-list::-webkit-scrollbar-thumb{background:var(--border); border-radius:3px;}
 
-  .dot{width:8px; height:8px; border-radius:50%; display:inline-block; flex-shrink:0;}
-  .dot.blue{background:var(--blue);} .dot.green{background:var(--green);}
-  .dot.purple{background:var(--purple);} .dot.orange{background:var(--orange);}
-  .dot.grey{background:var(--text3);} .dot.red{background:var(--red);} .dot.teal{background:#14b8a6;}
+  .dot{width:7px; height:7px; border-radius:50%; display:inline-block; flex-shrink:0;}
+  .dot.teal{background:var(--c-teal);} .dot.gold{background:var(--c-gold);}
+  .dot.blue{background:var(--c-blue);} .dot.rose{background:var(--c-rose);}
+  .dot.plum{background:var(--c-plum);} .dot.sage{background:var(--c-sage);}
+  .dot.stone{background:var(--c-stone);}
 
   .person{
-    background:var(--card); border:1px solid var(--border); border-radius:7px;
-    padding:9px 40px 9px 11px; margin-bottom:7px; font-size:12px; position:relative;
+    background:var(--card3); border:1px solid var(--border); border-left:3px solid var(--border);
+    border-radius:8px; padding:9px 40px 9px 11px; margin-bottom:7px; font-size:12px; position:relative;
   }
-  .person .pname{font-weight:600; font-size:12.5px; margin-bottom:3px;}
-  .person .pmeta{color:var(--text3); font-size:11px; line-height:1.45;}
+  .person .pname{font-weight:700; font-size:12.5px; margin-bottom:3px;}
+  .person .pmeta{color:var(--text3); font-size:11px; line-height:1.5;}
   .person .pmeta b{color:var(--text2); font-weight:600;}
   .person-actions{position:absolute; top:8px; right:8px; display:flex; gap:6px;}
   .person-actions span{cursor:pointer; color:var(--text3); font-size:12px;}
@@ -144,14 +189,18 @@
     width:100%; background:transparent; border:1px dashed var(--border); color:var(--text3);
     padding:6px; border-radius:6px; font-size:11px; cursor:pointer; margin-top:2px;
   }
-  .add-person-btn:hover{border-color:var(--blue); color:var(--blue);}
+  .add-person-btn:hover{border-color:var(--c-teal); color:var(--c-teal);}
   .sec-empty{font-size:11px; color:var(--text3); font-style:italic; padding:4px 0;}
 
   @media(max-width:900px){
-    .gov-diagram{flex-direction:column; gap:16px;}
+    .modal.wide{display:block; overflow-y:auto; max-height:92vh;}
+    .gov-diagram{flex-direction:column; gap:16px; flex:none;}
     .gov-rail{writing-mode:horizontal-tb; transform:none; min-width:auto; margin-right:0; margin-bottom:4px; flex-direction:row;}
-    .gov-branch, .gov-branch-right{padding-left:0; margin-right:0;}
+    .gov-branch{padding-left:0; margin-right:0;}
+    .gov-branch-right{padding-left:0; flex-direction:column; gap:10px;}
     .gov-branch::before, .gov-branch-right::before, .gov-box::before{display:none;}
+    .gov-box{min-height:auto;}
+    .gov-branch .gov-box .person-list, .gov-branch-right .gov-box .person-list{max-height:160px; flex:none;}
   }
 
   #loadingOverlay{
@@ -159,7 +208,7 @@
     display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;
   }
   .spinner{
-    width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--blue);
+    width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--c-teal);
     border-radius:50%; animation:spin .8s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg);}}
@@ -183,7 +232,7 @@
   <div class="brand">
     <img id="logoImg" src="" alt="Grupo DB">
     <div>
-      <h1>Governança de Projetos</h1>
+      <h1><span class="chev">›</span>Governança de Projetos</h1>
       <span>PMO Corporativo · Grupo DB</span>
     </div>
   </div>
@@ -244,8 +293,13 @@
       <div class="gov-branch-right" id="govRightBranch"></div>
     </div>
     <div class="modal-actions">
-      <button class="btn danger" onclick="askDeleteProject()">Excluir Projeto</button>
-      <button class="btn secondary" onclick="openEditProject()">Editar Dados do Projeto</button>
+      <div class="grp">
+        <button class="btn secondary" onclick="exportToPPT(event)">⬇ Baixar para PPT</button>
+      </div>
+      <div class="grp">
+        <button class="btn danger" onclick="askDeleteProject()">Excluir Projeto</button>
+        <button class="btn secondary" onclick="openEditProject()">Editar Dados do Projeto</button>
+      </div>
     </div>
   </div>
 </div>
@@ -309,6 +363,9 @@
   </div>
 </div>
 
+<!-- Container oculto usado apenas para gerar a imagem de exportação -->
+<div id="pptExportContainer" style="position:fixed; left:-10000px; top:0; width:1280px; background:#ffffff;"></div>
+
 <script type="module">
 // ─── Firebase Setup ─────────────────────────────────────────────────────────
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -337,13 +394,13 @@ function showLoading(){ document.getElementById("loadingOverlay").style.display=
 function hideLoading(){ document.getElementById("loadingOverlay").style.display="none"; }
 
 const PAPEIS = {
-  pmo:         { label:"PMO",                    dot:"blue"   },
-  gestor:      { label:"Gestor do Projeto",      dot:"orange" },
-  lider:       { label:"Líder do Projeto",       dot:"green"  },
-  head:        { label:"Head",                   dot:"teal"   },
-  backoffice:  { label:"Equipe de Backoffice",   dot:"purple" },
-  equipe:      { label:"Equipe do Projeto",      dot:"blue"   },
-  terceiros:   { label:"Terceiros",              dot:"grey"   },
+  pmo:         { label:"PMO",                    dot:"teal"  },
+  gestor:      { label:"Gestor do Projeto",      dot:"gold"  },
+  lider:       { label:"Líder do Projeto",       dot:"blue"  },
+  head:        { label:"Head",                   dot:"rose"  },
+  backoffice:  { label:"Equipe de Backoffice",   dot:"plum"  },
+  equipe:      { label:"Equipe do Projeto",      dot:"sage"  },
+  terceiros:   { label:"Terceiros",              dot:"stone" },
 };
 
 let projects = [];
@@ -509,6 +566,145 @@ window.closeDetail = function(){
   currentProjectId = null;
 }
 
+// Export PPT functions
+const C = { bg:"#0c1a2b", teal:"#0f9c8c", tealLight:"#2dd4bf", tealBorder:"#1a5c54",
+  text:"#ffffff", textDim:"#cbd7e6", textMuted:"#5c7089", textTitle:"#e6edf5",
+  line:"#2a4a5c", pill:"#0f9c8c", pillLabel:"#d1fdf4" };
+
+function eBox(label, names){
+  const body = names.length
+    ? names.map(n => `<div style="color:${C.text};font-weight:700;font-size:14px;line-height:1.45;">${escapeHtml(n)}</div>`).join("")
+    : `<div style="color:${C.pillLabel};font-style:italic;font-size:12px;">A definir</div>`;
+  return `<div style="background:${C.teal};border-radius:9px;padding:11px 15px;min-width:230px;">
+    <div style="color:${C.pillLabel};font-size:10.5px;font-weight:800;letter-spacing:.7px;margin-bottom:5px;">${escapeHtml(label).toUpperCase()}</div>
+    ${body}
+  </div>`;
+}
+
+function eListBox(title, items){
+  const body = items.length
+    ? items.map(t => `<div style="color:${C.textDim};font-size:12.5px;margin-bottom:5px;line-height:1.4;">&bull;&nbsp; ${escapeHtml(t)}</div>`).join("")
+    : `<div style="color:${C.textMuted};font-size:12px;font-style:italic;">A definir</div>`;
+  return `<div style="border:1.5px solid ${C.tealLight};border-radius:9px;padding:14px 18px;">
+    <div style="color:${C.tealLight};font-size:14px;font-weight:800;margin-bottom:9px;">${escapeHtml(title)}</div>
+    ${body}
+  </div>`;
+}
+
+function buildExportHTML(p){
+  const pessoas = p.pessoas || [];
+  const byRole = k => pessoas.filter(ps => ps.papel === k);
+  const fmt = ps => ps.setor ? `${ps.setor} \u2013 ${ps.nome}` : ps.nome;
+
+  const roles = [
+    { key:"pmo", label:"PMO" },
+    { key:"gestor", label:"Gestor do Projeto" },
+    { key:"lider", label:"L\u00edder do Projeto" },
+    { key:"head", label:"Head" },
+  ];
+
+  const rightSections = [
+    { title:"Equipe de Backoffice", items: byRole("backoffice").map(fmt) },
+    { title:"Equipe do Projeto", items: byRole("equipe").map(fmt) },
+    { title:"Terceiros", items: byRole("terceiros").map(fmt) },
+  ];
+
+  const committeeRows = roles.map((r, i) => {
+    const isFirst = i === 0;
+    const isLast = i === roles.length - 1;
+    return `<tr>
+      <td style="width:28px; position:relative; vertical-align:middle;">
+        <div style="position:absolute; left:50%; ${isFirst ? "top:50%;" : "top:0;"} ${isLast ? "bottom:50%;" : "bottom:0;"} width:2px; background:${C.line}; transform:translateX(-50%);"></div>
+        <div style="position:absolute; left:50%; top:50%; width:50%; height:2px; background:${C.line};"></div>
+      </td>
+      <td style="padding:8px 0 8px 4px;">${eBox(r.label, byRole(r.key).map(x => x.nome))}</td>
+    </tr>`;
+  }).join("");
+
+  const rightRows = rightSections.map((s, i) => {
+    const isFirst = i === 0;
+    const isLast = i === rightSections.length - 1;
+    return `<tr>
+      <td style="width:28px; position:relative; vertical-align:middle;">
+        <div style="position:absolute; left:50%; ${isFirst ? "top:50%;" : "top:0;"} ${isLast ? "bottom:50%;" : "bottom:0;"} width:2px; background:${C.line}; transform:translateX(-50%);"></div>
+        <div style="position:absolute; left:50%; top:50%; width:50%; height:2px; background:${C.line};"></div>
+      </td>
+      <td style="padding:10px 0 10px 4px; width:100%;">${eListBox(s.title, s.items)}</td>
+    </tr>`;
+  }).join("");
+
+  const sponsorHTML = `
+    <div style="background:${C.pill}; border-radius:11px; width:44px; position:relative; flex-shrink:0; align-self:stretch;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-90deg); white-space:nowrap; display:flex; align-items:center; gap:11px;">
+        <span style="color:${C.pillLabel}; font-size:10px; font-weight:800; letter-spacing:2px;">SPONSOR</span>
+        <span style="color:#fff; font-size:16px; font-weight:800;">${escapeHtml(p.sponsor || "\u2014")}</span>
+      </div>
+    </div>`;
+
+  const bridgeHTML = `
+    <div style="display:flex; align-items:center; width:36px; flex-shrink:0;">
+      <div style="width:100%; height:2px; background:${C.line};"></div>
+    </div>`;
+
+  return `
+    <div style="width:1280px; background:${C.bg}; font-family:Inter,Arial,sans-serif; padding:46px 54px;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px;">
+        <div style="font-family:Sora,Arial,sans-serif; font-size:32px; font-weight:800; color:#fff; display:flex; align-items:center; gap:6px;">
+          <span style="color:${C.tealLight};">\u203a</span>Governan\u00e7a
+        </div>
+        <div style="font-size:13px; color:#7a8ba3; font-weight:600;">${escapeHtml(p.nome)}${p.codigo ? " \u00b7 C\u00f3digo: " + escapeHtml(p.codigo) : ""}</div>
+      </div>
+      <div style="height:2px; width:120px; background:linear-gradient(90deg,${C.tealLight},transparent); margin-bottom:34px;"></div>
+
+      <div style="display:flex; align-items:stretch;">
+        ${sponsorHTML}
+        <div style="margin-left:20px; display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.6px; color:${C.textTitle}; margin-bottom:12px; padding-left:32px;">COMIT\u00ca EXECUTIVO</div>
+          <table style="border-spacing:0; border-collapse:collapse;">${committeeRows}</table>
+        </div>
+        ${bridgeHTML}
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+          <table style="border-spacing:0; border-collapse:collapse; width:100%;">${rightRows}</table>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:36px; padding-top:16px; border-top:1px solid #1c2f45;">
+        <div style="font-size:10.5px; color:${C.textMuted};">PMO Corporativo \u00b7 Grupo DB</div>
+        <div style="font-size:10.5px; color:${C.textMuted};">Gerado via Dashboard de Governan\u00e7a</div>
+      </div>
+    </div>`;
+}
+
+window.exportToPPT = async function(evt){
+  const p = projects.find(x => x.id === currentProjectId);
+  if(!p) return;
+  const btn = evt.target;
+  const originalText = btn.textContent;
+  btn.textContent = "Gerando imagem...";
+  btn.disabled = true;
+  try{
+    const container = document.getElementById("pptExportContainer");
+    container.innerHTML = buildExportHTML(p);
+    await new Promise(r => setTimeout(r, 80));
+    const canvas = await html2canvas(container, { scale:2, backgroundColor:"#0c1a2b", useCORS:true });
+    const dataUrl = canvas.toDataURL("image/png");
+    const slug = p.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+    const a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = `governanca-${slug || "projeto"}.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    container.innerHTML = "";
+  }catch(e){
+    console.error("Erro ao gerar imagem:", e);
+    alert("Não foi possível gerar a imagem. Tenta de novo em alguns segundos.");
+  }finally{
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
 const LEFT_KEYS = ["pmo","gestor","lider","head"];
 const RIGHT_KEYS = ["backoffice","equipe","terceiros"];
 
@@ -517,7 +713,7 @@ function buildBox(key, pessoas){
   const lista = pessoas.filter(ps => ps.papel === key);
   const peopleHtml = lista.length
     ? lista.map(ps => `
-      <div class="person">
+      <div class="person" style="border-left-color:var(--c-${conf.dot})">
         <div class="person-actions">
           <span onclick="event.stopPropagation(); openEditPerson('${ps.id}')" title="Editar">✏️</span>
           <span onclick="event.stopPropagation(); askDeletePerson('${ps.id}')" title="Excluir">🗑️</span>
